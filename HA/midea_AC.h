@@ -46,7 +46,7 @@ class MideaACSensor : public PollingComponent, public Sensor {
   uint8_t update_command=0;
   uint8_t update_internal=0;
 
-  BunicutzACSensor(\
+  MideaACSensor(\
   esphome::template_::TemplateSelect *&_SetMode_in,\
   esphome::template_::TemplateSelect *&_SetFanMode_in,\
   esphome::template_::TemplateNumber *&_SetTemp_in, \
@@ -88,7 +88,7 @@ class MideaACSensor : public PollingComponent, public Sensor {
 
   void setup() override {
     
-  ESP8266_Midea_RS485.begin(SERIAL_COM_BUS,RO_PIN,DI_PIN,SERIAL_COM_CONTROL_PIN,SERIAL_COM_MASTER_ID,SERIAL_COM_SLAVE_ID,SERIAL_COM_MASTER_SEND_TIME,SERIAL_COM_SLAVE_TIMEOUT_TIME);
+  ESP8266_Midea_RS485.begin(SERIAL_COM_BUS,SERIAL_COM_CONTROL_PIN,SERIAL_COM_MASTER_ID,SERIAL_COM_SLAVE_ID,SERIAL_COM_MASTER_SEND_TIME,SERIAL_COM_SLAVE_TIMEOUT_TIME);
   
   
   
