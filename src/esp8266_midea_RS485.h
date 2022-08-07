@@ -72,8 +72,8 @@ class ESP8266_Midea_RS485Class {
     ESP8266_Midea_RS485Class(uint8_t re_de_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout);
     
     virtual void begin(uint8_t re_de_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout);
-    void ESP8266_Midea_RS485Class::EnableTX();
-    void ESP8266_Midea_RS485Class::EnableRX();
+    void EnableTX();
+    void EnableRX();
     uint8_t SetMode(MideaACOpModeType mode);
     uint8_t SetFanMode(MideaACFanModeType fan_mode);
     uint8_t SetTemp(uint8_t temp);
