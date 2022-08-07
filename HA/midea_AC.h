@@ -2,12 +2,10 @@
 #include <esp8266_midea_RS485.h>
 
 #define SERIAL_COM_CONTROL_PIN 4
-#define SERIAL_COM_MASTER_ID 0
+#define SERIAL_COM_MASTER_ID 1
 #define SERIAL_COM_SLAVE_ID 0xFF
 #define SERIAL_COM_MASTER_SEND_TIME 30
 #define SERIAL_COM_SLAVE_TIMEOUT_TIME 100
-
-float DesiredTemp = 18;
 
 class MideaACSensor : public PollingComponent, public Sensor
 {
@@ -45,7 +43,7 @@ public:
                  ESP8266_Midea_RS485.SentData[13],
                  ESP8266_Midea_RS485.SentData[14],
                  ESP8266_Midea_RS485.SentData[15]);
-        ESP_LOGD("custom", "ReceivedData: %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x",
+        ESP_LOGD("custom", "ReceivedData: %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x",
                  ESP8266_Midea_RS485.ReceivedData[0],
                  ESP8266_Midea_RS485.ReceivedData[1],
                  ESP8266_Midea_RS485.ReceivedData[2],
@@ -77,21 +75,13 @@ public:
                  ESP8266_Midea_RS485.ReceivedData[28],
                  ESP8266_Midea_RS485.ReceivedData[29],
                  ESP8266_Midea_RS485.ReceivedData[30],
-                 ESP8266_Midea_RS485.ReceivedData[31],
-                 ESP8266_Midea_RS485.ReceivedData[32],
-                 ESP8266_Midea_RS485.ReceivedData[33],
-                 ESP8266_Midea_RS485.ReceivedData[34],
-                 ESP8266_Midea_RS485.ReceivedData[35],
-                 ESP8266_Midea_RS485.ReceivedData[36],
-                 ESP8266_Midea_RS485.ReceivedData[37],
-                 ESP8266_Midea_RS485.ReceivedData[38],
-                 ESP8266_Midea_RS485.ReceivedData[39]);
+                 ESP8266_Midea_RS485.ReceivedData[31]);
 
-        for (index = 0; index < 32; index++)
+        for (int index = 0; index < 32; index++)
         {
             ESP8266_Midea_RS485.ReceivedData[index] = 0;
         }
 
-        state->publish_state(ESP8266_Midea_RS485.state)
+        state->publish_state(ESP8266_Midea_RS485.state);
     }
 };

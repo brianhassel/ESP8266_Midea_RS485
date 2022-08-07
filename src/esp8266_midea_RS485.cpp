@@ -98,7 +98,7 @@ uint8_t ESP8266_Midea_RS485Class::CalculateCRC()
       crc += SentData[i];
     }
   }
-  return 0xFF - (crc & 0xFF);
+  return 255 - crc % 256 + 1;
 }
 
 void ESP8266_Midea_RS485Class::ClearResponseBuffer()
