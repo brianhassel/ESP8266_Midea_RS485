@@ -9,9 +9,12 @@
 
 float DesiredTemp = 18;
 
-class MideaACSensor : public PollingComponent
+class MideaACSensor : public PollingComponent, public Sensor
 {
 public:
+
+    Sensor *state = new Sensor();
+    
     MideaACSensor() : PollingComponent(10000){}
 
     float get_setup_priority() const override { return esphome::setup_priority::AFTER_WIFI; }
@@ -88,5 +91,7 @@ public:
         {
             ESP8266_Midea_RS485.ReceivedData[index] = 0;
         }
+
+        state->publish_state(ESP8266_Midea_RS485.state)
     }
 };

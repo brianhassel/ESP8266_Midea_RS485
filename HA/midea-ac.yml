@@ -32,4 +32,10 @@ sensor:
   lambda: |-
     auto my_ACSensors = new MideaACSensor();
     App.register_component(my_ACSensors);
+    return {
+            my_ACSensors->state
     };
+  sensors:
+  - name: "AC Com State"    
+    unit_of_measurement: "bool"
+    accuracy_decimals: 0
