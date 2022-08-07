@@ -14,7 +14,7 @@ class MideaACSensor : public PollingComponent, public Sensor
 public:
 
     Sensor *state = new Sensor();
-    
+
     MideaACSensor() : PollingComponent(10000){}
 
     float get_setup_priority() const override { return esphome::setup_priority::AFTER_WIFI; }
@@ -87,7 +87,7 @@ public:
                  ESP8266_Midea_RS485.ReceivedData[38],
                  ESP8266_Midea_RS485.ReceivedData[39]);
 
-        for (index = 0; index < 40; index++)
+        for (index = 0; index < 32; index++)
         {
             ESP8266_Midea_RS485.ReceivedData[index] = 0;
         }
