@@ -8,9 +8,7 @@ esphome:
 esp8266:
   board: esp01_1m
 
-# Disable logging over UART (required)
 logger:
-  baud_rate: 0
 
 # Enable Home Assistant API
 api:
