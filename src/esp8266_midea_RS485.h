@@ -17,7 +17,6 @@ class ESP8266_Midea_RS485Class {
     MideaACPropertiesType State;
     uint8_t SentData[16];
     uint8_t ReceivedData[32];
-    uint8_t state;
   private:
     uint8_t ComControlPin;
     uint8_t SlaveId;
