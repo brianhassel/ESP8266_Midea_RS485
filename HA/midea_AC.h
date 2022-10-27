@@ -1,7 +1,6 @@
 #include "esphome.h"
-#include <esp8266_midea_RS485.h>
+#include <ESP8266_Midea_RS485.h>
 
-#define SERIAL_COM_CONTROL_PIN 4
 #define SERIAL_COM_MASTER_ID 0
 #define SERIAL_COM_SLAVE_ID 0
 #define SERIAL_COM_MASTER_SEND_TIME 30
@@ -80,7 +79,7 @@ public:
 
     void setup() override
     {
-        ESP8266_Midea_RS485.begin(SERIAL_COM_CONTROL_PIN, SERIAL_COM_MASTER_ID, SERIAL_COM_SLAVE_ID, SERIAL_COM_MASTER_SEND_TIME, SERIAL_COM_SLAVE_TIMEOUT_TIME);
+        ESP8266_Midea_RS485.begin(SERIAL_COM_MASTER_ID, SERIAL_COM_SLAVE_ID, SERIAL_COM_MASTER_SEND_TIME, SERIAL_COM_SLAVE_TIMEOUT_TIME);
     }
     void update() override
     {

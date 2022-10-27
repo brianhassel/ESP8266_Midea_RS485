@@ -5,7 +5,6 @@
 
 #define MIDEA_BAUDRATE 4800
 
-#define DEFAULT_SERIAL_COM_CONTROL_PIN 4
 #define DEFAULT_SERIAL_COM_MASTER_ID 0
 #define DEFAULT_SERIAL_COM_SLAVE_ID 0
 #define DEFAULT_SERIAL_COM_MASTER_SEND_TIME 30
@@ -78,20 +77,17 @@
 #define TRANSMIT_CRC 16
 #define RECEIVE_CRC 32
 
-ESP8266_Midea_RS485Class::ESP8266_Midea_RS485Class(uint8_t re_de_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout) : ComControlPin(re_de_pin),
-                                                                                                                                                             SlaveId(slave_id),
-                                                                                                                                                             MasterId(master_id),
-                                                                                                                                                             Master_Send_Time(command_time),
-                                                                                                                                                             Slave_Resp_Time(response_timeout),
-                                                                                                                                                             UpdateNextCycle(0)
+ESP8266_Midea_RS485Class::ESP8266_Midea_RS485Class(uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout) : 
+  SlaveId(slave_id),
+  MasterId(master_id),
+  Master_Send_Time(command_time),
+  Slave_Resp_Time(response_timeout),
+  UpdateNextCycle(0)
 {
 }
 
-void ESP8266_Midea_RS485Class::begin(uint8_t re_de_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout)
+void ESP8266_Midea_RS485Class::begin(uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout)
 {
-  ComControlPin = re_de_pin;
-  pinMode(ComControlPin, OUTPUT);
-  EnableRX();
   Serial.begin(MIDEA_BAUDRATE);
   SlaveId = slave_id;
   MasterId = master_id;
@@ -136,16 +132,6 @@ void ESP8266_Midea_RS485Class::begin(uint8_t re_de_pin, uint8_t master_id, uint8
   {
     DesiredState.Vent = MIDEA_AC_INACTIVE;
   }
-}
-
-void ESP8266_Midea_RS485Class::EnableTX()
-{
-  digitalWrite(ComControlPin, HIGH);
-}
-
-void ESP8266_Midea_RS485Class::EnableRX()
-{
-  digitalWrite(ComControlPin, LOW);
 }
 
 uint8_t ESP8266_Midea_RS485Class::SetMode(MideaACOpModeType mode)
@@ -286,10 +272,8 @@ void ESP8266_Midea_RS485Class::Update()
     UpdateNextCycle = 0;
   }
 
-  EnableTX();
   Serial.write(SentData, 16);
   delay(Master_Send_Time);
-  EnableRX();
   delay(Slave_Resp_Time);
 
   State.ACNotResponding = 0;
@@ -343,10 +327,8 @@ void ESP8266_Midea_RS485Class::Lock()
   SentData[15] = PROLOGUE;
   SentData[14] = CalculateCRC(TRANSMIT_CRC);
 
-  EnableTX();
   Serial.write(SentData, 16);
   delay(Master_Send_Time);
-  EnableRX();
   delay(Slave_Resp_Time);
 
   State.ACNotResponding = 0;
@@ -399,10 +381,8 @@ void ESP8266_Midea_RS485Class::Unlock()
   SentData[15] = PROLOGUE;
   SentData[14] = CalculateCRC(TRANSMIT_CRC);
 
-  EnableTX();
   Serial.write(SentData, 16);
   delay(Master_Send_Time);
-  EnableRX();
   delay(Slave_Resp_Time);
 
   State.ACNotResponding = 0;
@@ -619,4 +599,4 @@ uint32_t ESP8266_Midea_RS485Class::CalculateGetTime(uint8_t time)
   return timeValue;
 }
 
-ESP8266_Midea_RS485Class ESP8266_Midea_RS485(DEFAULT_SERIAL_COM_CONTROL_PIN, DEFAULT_SERIAL_COM_MASTER_ID, DEFAULT_SERIAL_COM_SLAVE_ID, DEFAULT_SERIAL_COM_MASTER_SEND_TIME, DEFAULT_SERIAL_COM_SLAVE_TIMEOUT_TIME);
+ESP8266_Midea_RS485Class ESP8266_Midea_RS485(DEFAULT_SERIAL_COM_MASTER_ID, DEFAULT_SERIAL_COM_SLAVE_ID, DEFAULT_SERIAL_COM_MASTER_SEND_TIME, DEFAULT_SERIAL_COM_SLAVE_TIMEOUT_TIME);
